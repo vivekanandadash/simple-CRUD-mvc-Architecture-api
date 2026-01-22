@@ -65,6 +65,7 @@ public class EmployeeController {
 
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+    //find  by id
     @GetMapping("/find/{id}")
     public ResponseEntity<APIResponse<Employee>> findById(
             @PathVariable Long id
