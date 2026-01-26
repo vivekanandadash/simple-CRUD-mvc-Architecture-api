@@ -6,6 +6,9 @@ import com.api_example.entity.Employee;
 import com.api_example.repository.EmployeeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,9 +43,13 @@ public class EmployeeService {
     }
 
 
-    public List<Employee> getEmployeeDetails() {
-        List<Employee> emp = employeeRepository.findAll();
-        return emp;
+    public List<Employee> getAllEmployeeDetails(Integer pageNumber , Integer pageSize) {
+
+        Pageable pages = PageRequest.of(pageNumber,pageSize);
+
+        Page<Employee> pageEmployee = employeeRepository.findAll(pages);
+        List<Employee> content = pageEmployee.getContent();
+        return content;
     }
 
     public Employee findByidRegistration(Long id) {

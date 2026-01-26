@@ -17,6 +17,7 @@ import java.util.List;
 public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
+
     @PostMapping("/save")
     public ResponseEntity<APIResponse<String>> saveRegistration(@RequestBody Employee employee){
         String status = employeeService.saveEmployeeData(employee);
@@ -55,9 +56,12 @@ public class EmployeeController {
         response.setStatus(200);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-    @GetMapping("/all")
-    public ResponseEntity<APIResponse<List<Employee>>> FindAllEmployeeDetails(){
-        List<Employee> employees = employeeService.getEmployeeDetails();
+    @GetMapping("/find/all")
+    public ResponseEntity<APIResponse<List<Employee>>> FindAllEmployeeDetails(
+            @RequestParam(value = "pageNumber",defaultValue = "0",required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize",defaultValue = "5")Integer pageSize
+    ){
+        List<Employee> employees = employeeService.getAllEmployeeDetails(pageNumber,pageSize);
         APIResponse<List<Employee>> response = new APIResponse<>();
         response.setMessage("get SuccessFully");
         response.setData(employees);
@@ -80,5 +84,6 @@ public class EmployeeController {
         return new ResponseEntity<>(response,HttpStatus.OK);
 
     }
+
 
 }
