@@ -2,6 +2,7 @@ package com.api_example.service;
 
 import com.api_example.dto.APIResponse;
 import com.api_example.dto.EmployeeDto;
+import com.api_example.dto.EmployeeResponse;
 import com.api_example.entity.Employee;
 import com.api_example.repository.EmployeeRepository;
 import org.springframework.beans.BeanUtils;
@@ -18,12 +19,10 @@ import java.util.Optional;
 public class EmployeeService {
     @Autowired EmployeeRepository employeeRepository;
     public String saveEmployeeData(Employee employee){
-    try {
+
         employeeRepository.save(employee);
         return "done";
-    }catch (Exception e){
-        return "failed";
-    }
+
     }
 
     public void deleteEmployeeId(Long id) {
@@ -43,13 +42,21 @@ public class EmployeeService {
     }
 
 
-    public List<Employee> getAllEmployeeDetails(Integer pageNumber , Integer pageSize) {
+    public EmployeeResponse getAllEmployeeDetails(Integer pageNumber , Integer pageSize) {
 
         Pageable pages = PageRequest.of(pageNumber,pageSize);
 
         Page<Employee> pageEmployee = employeeRepository.findAll(pages);
         List<Employee> content = pageEmployee.getContent();
-        return content;
+        EmployeeResponse employeeResponse = new EmployeeResponse();
+        employeeResponse.setContent(content);
+        employeeResponse.setPageNumber(pageEmployee.getNumber());
+        employeeResponse.setPageSize(pageEmployee.getSize());
+        employeeResponse.setTotalElements(pageEmployee.getTotalElements());
+        employeeResponse.setTotalPages(pageEmployee.getTotalPages());
+        employeeResponse.setLastPage(pageEmployee.isLast());
+
+        return employeeResponse;
     }
 
     public Employee findByidRegistration(Long id) {

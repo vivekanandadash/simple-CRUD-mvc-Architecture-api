@@ -2,6 +2,7 @@ package com.api_example.controller;
 
 import com.api_example.dto.APIResponse;
 import com.api_example.dto.EmployeeDto;
+import com.api_example.dto.EmployeeResponse;
 import com.api_example.entity.Employee;
 import com.api_example.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,12 +58,12 @@ public class EmployeeController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
     @GetMapping("/find/all")
-    public ResponseEntity<APIResponse<List<Employee>>> FindAllEmployeeDetails(
+    public ResponseEntity<APIResponse<EmployeeResponse>> FindAllEmployeeDetails(
             @RequestParam(value = "pageNumber",defaultValue = "0",required = false) Integer pageNumber,
             @RequestParam(value = "pageSize",defaultValue = "5")Integer pageSize
     ){
-        List<Employee> employees = employeeService.getAllEmployeeDetails(pageNumber,pageSize);
-        APIResponse<List<Employee>> response = new APIResponse<>();
+        EmployeeResponse employees = employeeService.getAllEmployeeDetails(pageNumber,pageSize);
+        APIResponse<EmployeeResponse> response = new APIResponse<>();
         response.setMessage("get SuccessFully");
         response.setData(employees);
         response.setStatus(200);
