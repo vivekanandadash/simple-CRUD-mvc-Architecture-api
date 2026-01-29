@@ -4,6 +4,7 @@ import com.api_example.dto.APIResponse;
 import com.api_example.dto.EmployeeDto;
 import com.api_example.dto.EmployeeResponse;
 import com.api_example.entity.Employee;
+import com.api_example.exception.ResourceNotFoundException;
 import com.api_example.repository.EmployeeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,20 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
     @Autowired EmployeeRepository employeeRepository;
+
+//    API FOR SAVING THE DATA
     public String saveEmployeeData(Employee employee){
 
         employeeRepository.save(employee);
         return "done";
 
     }
-
+//  API FOR DELETING THE DATA
     public void deleteEmployeeId(Long id) {
 
         employeeRepository.deleteById(id);
     }
+    //API FOR UPDATING THE DATA
 
     public EmployeeDto updateRegistration(Long id , EmployeeDto employeeDto) {
         Employee employee = employeeRepository.findById(id).get();
@@ -41,6 +45,7 @@ public class EmployeeService {
         return employeeDto;
     }
 
+//   API FOR GETTING ALL THE DATA
 
     public EmployeeResponse getAllEmployeeDetails(Integer pageNumber , Integer pageSize) {
 
@@ -59,8 +64,12 @@ public class EmployeeService {
         return employeeResponse;
     }
 
+    //API FOR GETTING THE DATA BY ID
+
     public Employee findByidRegistration(Long id) {
-        Employee emp = employeeRepository.findById(id).get();
+        Employee emp = employeeRepository.findById(id).orElseThrow(
+                ()-> new ResourceNotFoundException("Record Not found")
+        );
         return  emp;
 
     }
