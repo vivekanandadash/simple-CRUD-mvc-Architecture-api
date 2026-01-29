@@ -1,6 +1,8 @@
 package com.api_example.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "employee")
@@ -11,12 +13,15 @@ public class Employee {
     private Long id;
 
     @Column(name = "name")
+    @Size(min = 2 ,message = "name should be at least 2 character")
     private String name;
 
     @Column(name = "email_id", nullable = false, unique = true)
+    @Email
     private String emailId;
 
     @Column(name = "mobile", nullable = false)
+    @Size(min = 10,max = 10,message = "invalid Number should be 10 digit")
     private String mobile;
 
     public String getMobile() {
