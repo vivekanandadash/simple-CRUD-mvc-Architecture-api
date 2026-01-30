@@ -15,9 +15,9 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>department-employee-api</artifactId>
+    <artifactId>apiExample_sep1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Department Employee API</name>
+    <name>apiExample_sep1</name>
     <description>Spring Boot MVC REST API</description>
 
     <properties>

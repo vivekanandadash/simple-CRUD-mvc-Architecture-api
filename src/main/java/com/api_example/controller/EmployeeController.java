@@ -30,8 +30,8 @@ public class EmployeeController {
         if (result.hasErrors()){
            response.setMessage("Invalid Input");
            response.setData(result.getFieldError().getDefaultMessage());
-           response.setStatus(500);
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+           response.setStatus(400);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         String status = employeeService.saveEmployeeData(employee);
         if("done".equals(status)){
