@@ -1,6 +1,5 @@
 package com.api_example.service;
 
-import com.api_example.dto.APIResponse;
 import com.api_example.dto.EmployeeDto;
 import com.api_example.dto.EmployeeResponse;
 import com.api_example.entity.Employee;
@@ -11,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -47,9 +46,9 @@ public class EmployeeService {
 
 //   API FOR GETTING ALL THE DATA
 
-    public EmployeeResponse getAllEmployeeDetails(Integer pageNumber , Integer pageSize) {
-
-        Pageable pages = PageRequest.of(pageNumber,pageSize);
+    public EmployeeResponse getAllEmployeeDetails(Integer pageNumber , Integer pageSize, String sortBy, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase("asc")?Sort.by(Sort.Direction.ASC,sortBy):Sort.by(Sort.Direction.DESC,sortBy);
+        Pageable pages = PageRequest.of(pageNumber,pageSize, sort);
 
         Page<Employee> pageEmployee = employeeRepository.findAll(pages);
         List<Employee> content = pageEmployee.getContent();

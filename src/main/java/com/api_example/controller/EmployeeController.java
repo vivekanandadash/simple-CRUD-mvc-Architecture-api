@@ -71,9 +71,11 @@ public class EmployeeController {
     @GetMapping("/find/all")
     public ResponseEntity<APIResponse<EmployeeResponse>> FindAllEmployeeDetails(
             @RequestParam(value = "pageNumber",defaultValue = "0",required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize",defaultValue = "5")Integer pageSize
+            @RequestParam(value = "pageSize",defaultValue = "5")Integer pageSize,
+            @RequestParam(value = "sortBy",defaultValue = "id",required = false) String sortBy,
+            @RequestParam(value = "sortDir",defaultValue ="asc",required = false) String sortDir
     ){
-        EmployeeResponse employees = employeeService.getAllEmployeeDetails(pageNumber,pageSize);
+        EmployeeResponse employees = employeeService.getAllEmployeeDetails(pageNumber,pageSize,sortBy,sortDir);
         APIResponse<EmployeeResponse> response = new APIResponse<>();
         response.setMessage("get SuccessFully");
         response.setData(employees);
