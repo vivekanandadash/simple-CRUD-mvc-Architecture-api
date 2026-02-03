@@ -26,7 +26,7 @@ public class EmployeeController {
             @Valid @RequestBody Employee employee,
             BindingResult result
     ){
-        APIResponse<String> response = new APIResponse<String>();
+        APIResponse<String> response = new APIResponse<>();
         if (result.hasErrors()){
            response.setMessage("Invalid Input");
            response.setData(result.getFieldError().getDefaultMessage());
